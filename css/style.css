@@ -61,6 +61,44 @@ img {
     margin-left: 10px;
 }
 
+/*Dropdown*/
+/*Got help for dropdown styling from here: https://www.w3schools.com/css/css_dropdowns.asp*/
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown:hover > a i {
+    transform: rotate(270deg);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    font-weight: 500;
+}
+
+.dropdown-content a:hover {
+    background-color: lightgray;
+    color: darkblue;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 /*Hero*/
 
 .hero {
@@ -261,6 +299,91 @@ img {
   margin: 20px 0;
 }
 
+/*Login*/
+
+.login-page {
+  background: white;
+}
+
+.login-section {
+  display: flex;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+}
+
+.login-form {
+  margin-top: 30px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 15px 50px 15px 15px;
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: lightblue;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: gray;
+  font-size: 20px;
+}
+
+.password-toggle:hover {
+  color: black;
+}
+
+.login-btn {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.login-footer {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.signup-link {
+  color: blue;
+  font-weight: 600;
+}
+
+.signup-link:hover {
+  color: darkblue;
+}
+
 /*Utility classes*/
 
 .container {
@@ -438,6 +561,20 @@ img {
   .text-xxl {
     font-size: 2.5rem;
   }
+
+  .dropdown-content {
+    position: static;
+    display: none;
+    box-shadow: none;
+    background: #f8f9fa;
+    border-radius: 0;
+    border: none;
+    margin-top: 10px;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
 }
 
 @media (max-width: 670px) {
@@ -487,6 +624,11 @@ img {
     text-align: center;
   }
 
+  .login-card{
+    margin: 20px;
+    padding: 30px 20px;
+  }
+
   /* Text */
   .text-xl {
     font-size: 1.9rem;
@@ -504,5 +646,9 @@ img {
 @media (max-width: 500px) {
   .text-xxl {
     font-size: 2rem;
+  }
+
+  .login-card{
+    padding: 25px 15px;
   }
 }

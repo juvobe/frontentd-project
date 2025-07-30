@@ -23,19 +23,32 @@
 
                 <div class="main-menu">
                     <ul>
-                        <li>
-                            <a href="index.html">Home</a>
+                        <li class="dropdown">
+                            <a href="index.html">Home <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="index.html">Home</a>
+                                <a href="#">Video</a>
+                                <a href="#">Testimonials</a>
+                                <a href="#">Pricing</a>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#">About Us <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="#">Our Story</a>
+                                <a href="#">Our Team</a>
+                                <a href="#">Contact Us</a>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#">Blog <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="#">Latest Posts</a>
+                                <a href="#">All posts</a>
+                            </div>
                         </li>
                         <li>
-                            <a href="#">About Us</a>
-                        </li>
-                        <li>
-                            <a href="#">Blog</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-light" href="#">
-                                <i class="fas fa-user"></i> Log in
-                            </a>
+                            <a class="btn btn-light" href="login.html"><i class="fas fa-user"></i> Log in</a>
                         </li>
                     </ul>
                 </div>
@@ -239,19 +252,20 @@
                     </a>
                     <div class="card">
                       <h4>Subscribe to Newsletter</h4>
-                      <p class="text-sm">
-                        Subscribe now to receive tips on how to take your business to
-                        the next level.
-                      </p>
+                      <p class="text-sm">Subscribe now to receive tips on how to take your business to the next level.</p>
                       <form>
                         <input type="email" id="email" placeholder="Enter your email" />
-                        <button type="submit" class="btn btn-primary btn-block">
-                          Subscribe
-                        </button>
+                        <button type="submit" class="btn btn-primary btn-block">Subscribe</button>
                       </form>
                     </div>
-                    <i class="fab fa-linkedin"></i>
-                    <i class="fab fa-twitter"></i>
+                    <div class="social-icons">
+                      <a href="https://linkedin.com">
+                        <i class="fab fa-linkedin"></i>
+                      </a>
+                      <a href="https://twitter.com">
+                        <i class="fab fa-twitter"></i>
+                      </a>
+                    </div>
                   </div>
                   <div>
                     <h4>Company</h4>
