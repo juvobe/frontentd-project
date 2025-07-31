@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 });
 
-// Dropdown functionality for mobile
+//Dropdown for mobile
 document.addEventListener('DOMContentLoaded', () => {
   const dropdowns = document.querySelectorAll('.dropdown');
   
@@ -56,40 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
-  
-  // Handle window resize
-  window.addEventListener('resize', () => {
-    const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dropdown => {
-      const dropdownContent = dropdown.querySelector('.dropdown-content');
-      if (window.innerWidth > 960) {
-        dropdownContent.style.display = '';
-      }
-    });
-  });
 });
 
-// Smooth scrolling for anchor links
-document.addEventListener('DOMContentLoaded', () => {
-  const anchorLinks = document.querySelectorAll('a[href^="#"]');
-  
-  anchorLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      const targetId = link.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      
-      if (targetElement) {
-        e.preventDefault();
-        targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  });
-});
-
-// Newsletter form submission
+//Added a cool animation to newsletter subscription, nothing actually happens when clicked
 document.addEventListener('DOMContentLoaded', () => {
   const newsletterForm = document.querySelector('footer form');
   
@@ -104,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
         submitBtn.disabled = true;
         
-        // Simulate subscription process
+        //Timeout to simulate subscription (don't actually know how long it should take)
         setTimeout(() => {
           submitBtn.innerHTML = '<i class="fas fa-check"></i> Subscribed!';
           submitBtn.style.background = 'green';
@@ -121,25 +90,127 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Add loading animation to buttons
+//Demo booking modal
 document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.btn:not(.login-btn):not([type="submit"])');
+  const modal = document.getElementById('demoModal');
+  const bookDemoBtn = document.getElementById('bookDemoBtn');
+  const closeModal = document.querySelector('.close-modal');
+  const cancelDemo = document.getElementById('cancelDemo');
+  const confirmDemo = document.getElementById('confirmDemo');
+  const calendarDays = document.getElementById('calendarDays');
+  const currentMonthElement = document.getElementById('currentMonth');
+  const prevMonthBtn = document.getElementById('prevMonth');
+  const nextMonthBtn = document.getElementById('nextMonth');
   
-  buttons.forEach(button => {
-    if (button.href && button.href !== '#' && !button.href.includes('mailto:') && !button.href.includes('tel:')) {
-      button.addEventListener('click', (e) => {
-        if (!button.href.startsWith('http') && !button.href.includes('.html')) {
-          e.preventDefault();
-          const originalText = button.innerHTML;
-          button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-          button.style.pointerEvents = 'none';
-          
-          setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.pointerEvents = '';
-          }, 2000);
-        }
-      });
+  let currentDate = new Date();
+  let selectedDate = null;
+  
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  
+  if (bookDemoBtn) {
+    bookDemoBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'block';
+      generateCalendar();
+    });
+  }
+  
+  const closeModalFunction = () => {
+    modal.style.display = 'none';
+  };
+  
+  if (closeModal) closeModal.addEventListener('click', closeModalFunction);
+  if (cancelDemo) cancelDemo.addEventListener('click', closeModalFunction);
+  
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModalFunction();
     }
   });
+  
+  if (prevMonthBtn) {
+    prevMonthBtn.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      generateCalendar();
+    });
+  }
+  
+  if (nextMonthBtn) {
+    nextMonthBtn.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      generateCalendar();
+    });
+  }
+  
+  //This function generates the calendar, got some help from here: https://dev.to/wizdomtek/creating-a-dynamic-calendar-using-html-css-and-javascript-29m
+  function generateCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    currentMonthElement.textContent = `${months[month]} ${year}`;
+    
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
+    
+    let calendarHTML = '';
+    
+    const prevMonth = new Date(year, month - 1, 0);
+    const prevMonthDays = prevMonth.getDate();
+    
+    for (let i = firstDay - 1; i >= 0; i--) {
+      const day = prevMonthDays - i;
+      calendarHTML += `<div class="calendar-day other-month">${day}</div>`;
+    }
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      const isPast = date < today.setHours(0, 0, 0, 0);
+      const isToday = date.toDateString() === new Date().toDateString();
+      const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+      
+      let classes = 'calendar-day';
+      if (isPast) classes += ' past';
+      if (isToday) classes += ' today';
+      if (isSelected) classes += ' selected';
+      
+      calendarHTML += `<div class="${classes}" data-date="${year}-${month}-${day}">${day}</div>`;
+    }
+
+    const totalCells = calendarHTML.split('calendar-day').length - 1;
+    const remainingCells = 42 - totalCells;
+    
+    for (let day = 1; day <= remainingCells; day++) {
+      calendarHTML += `<div class="calendar-day other-month">${day}</div>`;
+    }
+    
+    calendarDays.innerHTML = calendarHTML;
+    
+    const dayElements = calendarDays.querySelectorAll('.calendar-day:not(.other-month):not(.past)');
+    dayElements.forEach(dayElement => {
+      dayElement.addEventListener('click', () => {
+        calendarDays.querySelectorAll('.calendar-day.selected').forEach(el => {
+          el.classList.remove('selected');
+        });
+        
+        dayElement.classList.add('selected');
+        confirmDemo.disabled = false;
+      });
+    });
+  }
+
+  //When confirmed return to main page, the date is not currently used for anything
+  if (confirmDemo) {
+    confirmDemo.addEventListener('click', () => {
+      confirmDemo.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking...';
+      confirmDemo.disabled = true;
+      
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    });
+  }
 });
