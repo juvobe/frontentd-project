@@ -122,8 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.style.display = 'none';
   };
   
-  if (closeModal) closeModal.addEventListener('click', closeModalFunction);
-  if (cancelDemo) cancelDemo.addEventListener('click', closeModalFunction);
+  if (closeModal){
+    closeModal.addEventListener('click', closeModalFunction);
+  }
+  
+  if (cancelDemo){
+    cancelDemo.addEventListener('click', closeModalFunction);
+  }
   
   window.addEventListener('click', (e) => {
     if (e.target === modal) {
@@ -173,9 +178,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
       
       let classes = 'calendar-day';
-      if (isPast) classes += ' past';
-      if (isToday) classes += ' today';
-      if (isSelected) classes += ' selected';
+      
+      if (isPast){
+        classes += ' past';
+      }
+      if (isToday){
+        classes += ' today';
+      }
+      if (isSelected){
+        classes += ' selected';
+      }
       
       calendarHTML += `<div class="${classes}" data-date="${year}-${month}-${day}">${day}</div>`;
     }
